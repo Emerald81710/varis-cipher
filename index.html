@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VARIS Cryptographic Translator</title>
+    <style>
+        :root {
+            --bg-color: #090d16;
+            --card-bg: #111827;
+            --accent: #10b981; /* Terminal green */
+            --text: #e5e7eb;
+            --border: #374151;
+        }
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: var(--bg-color);
+            color: var(--text);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container {
+            max-width: 600px;
+            width: 100%;
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: var(--accent);
+            margin-top: 0;
+            letter-spacing: 2px;
+        }
+        label {
+            display: block;
+            margin: 15px 0 5px;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 14px;
+            color: #9ca3af;
+        }
+        textarea {
+            width: 100%;
+            height: 120px;
+            padding: 12px;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+            background-color: #030712;
+            color: var(--text);
+            font-size: 16px;
+            box-sizing: border-box;
+            resize: vertical;
+            font-family: inherit;
+        }
+        textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 8px rgba(16, 185, 129, 0.2);
+        }
+        .divider {
+            text-align: center;
+            font-size: 20px;
+            margin: 15px 0;
+            color: var(--accent);
+        }
+        .legend {
+            margin-top: 25px;
+            padding-top: 15px;
+            border-top: 1px dashed var(--border);
+            font-size: 12px;
+            color: #6b7280;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>[ VARIS SYSTEM ]</h1>
+    
+    <label for="englishInput">Plaintext (English & Numbers):</label>
+    <textarea id="englishInput" placeholder="Type message here... Numbers will automatically trigger mode switches..."></textarea>
+    
+    <div class="divider">&lt; = &gt;</div>
+    
+    <label for="varisInput">VARIS Ciphertext:</label>
+    <textarea id="varisInput" placeholder="Cipher stream will appear here..."></textarea>
+    
+    <div class="legend">
+        Note: Numbers require mode switches. System auto-wraps numbers in “ and ‘.
+    </div>
+</div>
+
+<script>
+    // Universal symbol mapping to positions/letters
+    const alphaToVaris = {
+        'A': '.', 'B': ',', 'C': '?', 'D': '!', 'E': ';',
+        'F': ':', 'G': '~', 'H': '@', 'I': '#', 'J': '$',
+        'K': '*', 'L': '(', 'M': ')', 'N': '=', 'O': '%',
+        'P': '^', 'Q': '&', 'R': '/', 'S': '\\', 'T': '-',
+        'U': '{', 'V': '<', 'W': '>', 'X': '[', 'Y': ']',
+        'Z': '+', ' ': '_'
+    };
+
+    const numToVaris = {
+        '1': '.', '2': ',', '3': '?', '4': '!', '5': ';',
+        '6': ':', '7': '~', '8': '@', '9': '#', '0': '$'
+    };
+
+    // Reverse maps for decoding back to plaintext
+    const varisToAlpha = {};
+    for (let key in alphaToVaris) { varisToAlpha[alphaToVaris[key]] = key; }
+
+    const varisToNum = {};
+    for (let key in numToVaris) { varisToNum[numToVaris[key]] = key; }
+
+    const englishInput = document.getElementById('englishInput');
+    const varisInput = document.getElementById('varisInput');
+
+    // 1. ENGLISH TO VARIS (Handles automatic wrapping of numbers in mode switches)
+    englishInput.addEventListener('input', () => {
+        const text = englishInput.value.toUpperCase();
+        let result = '';
+        let inNumberMode = false;
+
+        for (let i = 0; i < text.length; i++) {
+            let char = text[i];
+
+            if (/[0-9]/.test(char)) {
+                // If we hit a number and aren't in number mode, open the switch
+                if (!inNumberMode) {
+                    result += '“';
+                    inNumberMode = true;
+                }
+                result += numToVaris[char];
+            } else {
+                // If we hit a non-number but were in number mode, close the switch first
+                if (inNumberMode) {
+                    result += '‘';
+                    inNumberMode = false;
+                }
+                result += alphaToVaris[char] !== undefined ? alphaToVaris[char] : char;
+            }
+        }
+        // Safety check if text ends on a number
+        if (inNumberMode) {
+            result += '‘';
+        }
+        varisInput.value = result;
+    });
+
+    // 2. VARIS TO ENGLISH (Tracks mode switch characters to toggle decoding arrays)
+    varisInput.addEventListener('input', () => {
+        const text = varisInput.value;
+        let result = '';
+        let numberModeActive = false;
+
+        for (let i = 0; i < text.length; i++) {
+            let char = text[i];
+
+            if (char === '“') {
+                numberModeActive = true;
+                continue; // Skip printing the switch symbol itself
+            }
+            if (char === '‘') {
+                numberModeActive = false;
+                continue; // Skip printing the switch symbol itself
+            }
+
+            if (numberModeActive) {
+                result += varisToNum[char] !== undefined ? varisToNum[char] : char;
+            } else {
+                result += varisToAlpha[char] !== undefined ? varisToAlpha[char] : char;
+            }
+        }
+        englishInput.value = result.toLowerCase();
+    });
+</script>
+
+</body>
+</html>
