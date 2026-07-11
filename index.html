@@ -6,241 +6,126 @@
     <title>VARIS Cryptographic Translator</title>
     <style>
         :root {
-            --bg-color: #090d16;
-            --card-bg: #111827;
-            --accent: #10b981; /* Terminal green */
-            --text: #e5e7eb;
-            --border: #374151;
+            --bg-color: #060a12; --card-bg: #090f1a; --accent: #10b981;
+            --accent-dim: rgba(16, 185, 129, 0.2); --text-light: #e2e8f0;
         }
         body {
-            font-family: 'Courier New', Courier, monospace;
-            background-color: var(--bg-color);
-            color: var(--text);
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            font-family: 'Courier New', Courier, monospace; background-color: var(--bg-color);
+            background-image: linear-gradient(rgba(18, 24, 38, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 255, 0, 0.03));
+            background-size: 100% 4px, 6px 100%; color: var(--text-light); margin: 0; padding: 40px 20px;
+            display: flex; flex-direction: column; align-items: center; min-height: 100vh; box-sizing: border-box;
         }
         .container {
-            max-width: 600px;
-            width: 100%;
-            background: var(--card-bg);
-            padding: 30px;
-            border-radius: 8px;
-            border: 1px solid var(--border);
-            box-shadow: 0 0 20px rgba(16, 185, 129, 0.1);
+            max-width: 650px; width: 100%; background: var(--card-bg); padding: 35px; border-radius: 12px;
+            border: 1px solid #1e293b; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7), inset 0 0 20px rgba(16, 185, 129, 0.03);
         }
         h1 {
-            text-align: center;
-            color: var(--accent);
-            margin-top: 0;
-            letter-spacing: 2px;
+            text-align: center; color: var(--accent); margin: 0 0 25px; letter-spacing: 4px; font-size: 28px;
+            font-weight: bold; text-shadow: 0 0 10px var(--accent-dim); animation: textGlow 4s infinite alternate;
         }
-        label {
-            display: block;
-            margin: 15px 0 5px;
-            font-weight: bold;
-            text-transform: uppercase;
-            font-size: 14px;
-            color: #9ca3af;
-        }
+        @keyframes textGlow { 0% { text-shadow: 0 0 8px rgba(16, 185, 129, 0.3); } 100% { text-shadow: 0 0 18px rgba(16, 185, 129, 0.6); } }
+        .input-group { position: relative; margin-bottom: 20px; }
+        label { display: block; margin: 0 0 8px 4px; font-weight: bold; font-size: 13px; text-transform: uppercase; letter-spacing: 1.5px; color: #64748b; }
         textarea {
-            width: 100%;
-            height: 120px;
-            padding: 12px;
-            border-radius: 4px;
-            border: 1px solid var(--border);
-            background-color: #030712;
-            color: var(--text);
-            font-size: 16px;
-            box-sizing: border-box;
-            resize: vertical;
-            font-family: inherit;
+            width: 100%; height: 130px; padding: 15px; border-radius: 6px; border: 1px solid #131e31;
+            background-color: #04070d; color: var(--text-light); font-size: 16px; box-sizing: border-box;
+            resize: vertical; font-family: inherit; transition: all 0.25s ease; box-shadow: inset 0 2px 8px rgba(0,0,0,0.8);
         }
-        textarea:focus {
-            outline: none;
-            border-color: var(--accent);
-            box-shadow: 0 0 8px rgba(16, 185, 129, 0.2);
-        }
+        textarea:focus { outline: none; border-color: rgba(16, 185, 129, 0.5); box-shadow: 0 0 12px rgba(16, 185, 129, 0.15), inset 0 2px 8px rgba(0,0,0,0.8); color: #fff; }
+        textarea::placeholder { color: #334155; }
         .control-panel {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 20px 0;
-            gap: 15px;
-            padding: 10px;
-            background: #030712;
-            border: 1px solid var(--border);
-            border-radius: 4px;
+            display: flex; justify-content: center; align-items: center; margin: 20px 0; gap: 15px;
+            padding: 12px; background: #04070d; border: 1px solid #131e31; border-radius: 6px; box-shadow: inset 0 2px 5px rgba(0,0,0,0.5);
         }
-        .shift-label {
-            margin: 0;
-            font-size: 14px;
-            color: var(--accent);
-        }
-        input[type="number"] {
-            width: 70px;
-            background: #111827;
-            border: 1px solid var(--border);
-            color: var(--text);
-            padding: 8px;
-            font-family: inherit;
-            font-size: 16px;
-            text-align: center;
-            border-radius: 4px;
-        }
-        input[type="number"]:focus {
-            outline: none;
-            border-color: var(--accent);
-        }
-        .legend {
-            margin-top: 25px;
-            padding-top: 15px;
-            border-top: 1px dashed var(--border);
-            font-size: 12px;
-            color: #6b7280;
-            text-align: center;
-        }
+        .shift-label { margin: 0; font-size: 13px; font-weight: bold; letter-spacing: 1px; color: var(--accent); text-transform: uppercase; }
+        input[type="number"] { width: 70px; background: #090f1a; border: 1px solid #1e293b; color: #fff; padding: 8px; font-family: inherit; font-size: 16px; text-align: center; border-radius: 4px; }
+        input[type="number"]:focus { outline: none; border-color: var(--accent); }
+        .legend { margin-top: 30px; padding-top: 20px; border-top: 1px dashed #1e293b; font-size: 11px; color: #475569; text-align: center; line-height: 1.6; letter-spacing: 0.5px; }
     </style>
 </head>
 <body>
-
-<div class="container">
-    <h1>[ VARIS CIPHER ]</h1>
-    
-    <label for="englishInput">Plaintext (English & Numbers):</label>
-    <textarea id="englishInput" placeholder="Type message here..."></textarea>
-    
-    <div class="control-panel">
-        <span class="shift-label">CIPHER KEY:</span>
-        <input type="number" id="shiftInput" value="0" min="0" max="26">
+    <div class="container">
+        <h1>[ VARIS CIPHER ]</h1>
+        <div class="input-group">
+            <label for="englishInput">Plaintext (English & Numbers):</label>
+            <textarea id="englishInput" placeholder="Type message here..."></textarea>
+        </div>
+        <div class="control-panel">
+            <span class="shift-label">CIPHER KEY:</span>
+            <input type="number" id="shiftInput" value="0" min="0" max="26">
+        </div>
+        <div class="input-group">
+            <label for="varisInput">VARIS Ciphertext:</label>
+            <textarea id="varisInput" placeholder="Cipher stream will appear here..."></textarea>
+        </div>
+        <div class="legend">
+            Note: Numbers require mode switches. System auto-wraps numbers in “ and ‘.<br>
+            Spaces are included in the shifting alphabet (Positions 1-27).
+        </div>
     </div>
-    
-    <label for="varisInput">VARIS Ciphertext:</label>
-    <textarea id="varisInput" placeholder="Cipher stream will appear here..."></textarea>
-    
-    <div class="legend">
-        Note: Numbers require mode switches. System auto-wraps numbers in “ and ‘.<br>
-        Spaces are included in the shifting alphabet (Positions 1-27).
-    </div>
-</div>
+    <script>
+        const alphabetOrder = [...'ABCDEFGHIJKLMNOPQRSTUVWXYZ '];
+        const numberOrder = [...'1234567890'];
+        const symbols = ".,?!;:~@#$*()=%^&/\\-{}<>[ ]+_"; // String storage instead of a bulky map
+        
+        const englishInput = document.getElementById('englishInput');
+        const varisInput = document.getElementById('varisInput');
+        const shiftInput = document.getElementById('shiftInput');
 
-<script>
-    // Alphabet matrix now includes Space (' ') at Position 27 (Index 26)
-    const alphabetOrder = [
-        'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 
-        'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 
-        'U', 'V', 'W', 'X', 'Y', 'Z', ' '
-    ];
+        function getShift() { return parseInt(shiftInput.value) || 0; }
 
-    // Numbers 1-10 matrix grid
-    const numberOrder = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
+        function encodeText() {
+            const text = englishInput.value.toUpperCase();
+            const shift = getShift();
+            let result = '', inNum = false;
 
-    // Universal symbols mapping directly to positions 1-27
-    const posToSymbol = {
-        1: '.',  2: ',',  3: '?',  4: '!',  5: ';',  6: ':',  7: '~',  8: '@',  9: '#',  10: '$',
-        11: '*', 12: '(', 13: ')', 14: '=', 15: '%', 16: '^', 17: '&', 18: '/', 19: '\\', 20: '-',
-        21: '{', 22: '<', 23: '>', 24: '[', 25: ']', 26: '+', 27: '_'
-    };
-
-    // Create a reverse lookup: Symbol -> Position
-    const symbolToPos = {};
-    for (let key in posToSymbol) {
-        symbolToPos[posToSymbol[key]] = parseInt(key);
-    }
-
-    const englishInput = document.getElementById('englishInput');
-    const varisInput = document.getElementById('varisInput');
-    const shiftInput = document.getElementById('shiftInput');
-
-    function getShift() {
-        return parseInt(shiftInput.value) || 0;
-    }
-
-    // 1. ENCODE: ENGLISH -> VARIS
-    function encodeText() {
-        const text = englishInput.value.toUpperCase();
-        const shift = getShift();
-        let result = '';
-        let inNumberMode = false;
-
-        for (let i = 0; i < text.length; i++) {
-            let char = text[i];
-
-            if (/[0-9]/.test(char)) {
-                if (!inNumberMode) {
-                    result += '“';
-                    inNumberMode = true;
-                }
-                let rawIdx = numberOrder.indexOf(char); 
-                let shiftedIdx = (rawIdx + shift) % 10;
-                if (shiftedIdx < 0) shiftedIdx += 10;
-                let finalPos = shiftedIdx + 1;
-                result += posToSymbol[finalPos];
-
-            } else if (/[A-Z ]/.test(char)) {
-                // If it's a letter OR a space, it belongs to the 27-slot loop
-                if (inNumberMode) {
-                    result += '‘';
-                    inNumberMode = false;
-                }
-                let rawIdx = alphabetOrder.indexOf(char);
-                let shiftedIdx = (rawIdx + shift) % 27; // Shift across all 27 slots
-                if (shiftedIdx < 0) shiftedIdx += 27;
-                let finalPos = shiftedIdx + 1;
-                result += posToSymbol[finalPos];
-
-            } else {
-                if (inNumberMode) {
-                    result += '‘';
-                    inNumberMode = false;
-                }
-                result += char; // Keep external punctuation unchanged
-            }
-        }
-        if (inNumberMode) result += '‘';
-        varisInput.value = result;
-    }
-
-    // 2. DECODE: VARIS -> ENGLISH
-    function decodeText() {
-        const text = varisInput.value;
-        const shift = getShift();
-        let result = '';
-        let numberModeActive = false;
-
-        for (let i = 0; i < text.length; i++) {
-            let char = text[i];
-
-            if (char === '“') { numberModeActive = true; continue; }
-            if (char === '‘') { numberModeActive = false; continue; }
-
-            if (symbolToPos[char] !== undefined) {
-                let originalPos = symbolToPos[char];
-                let rawIdx = originalPos - 1;
-
-                if (numberModeActive) {
-                    let unshiftedIdx = (rawIdx - shift) % 10;
-                    if (unshiftedIdx < 0) unshiftedIdx += 10;
-                    result += numberOrder[unshiftedIdx];
+            for (let char of text) {
+                if (/[0-9]/.test(char)) {
+                    if (!inNum) { result += '“'; inNum = true; }
+                    let idx = (numberOrder.indexOf(char) + shift) % 10;
+                    result += symbols[idx < 0 ? idx + 11 : idx + 1];
+                } else if (/[A-Z ]/.test(char)) {
+                    if (inNum) { result += '‘'; inNum = false; }
+                    let idx = (alphabetOrder.indexOf(char) + shift) % 27;
+                    result += symbols[idx < 0 ? idx + 28 : idx + 1];
                 } else {
-                    // Reverse shift against the 27-character structure
-                    let unshiftedIdx = (rawIdx - shift) % 27;
-                    if (unshiftedIdx < 0) unshiftedIdx += 27;
-                    result += alphabetOrder[unshiftedIdx];
+                    if (inNum) { result += '‘'; inNum = false; }
+                    result += char;
                 }
-            } else {
-                result += char; 
             }
+            if (inNum) result += '‘';
+            varisInput.value = result;
         }
-        englishInput.value = result.toLowerCase();
-    }
 
-    englishInput.addEventListener('input', encodeText);
-    varisInput.addEventListener('input', decodeText);
-    shiftInput.addEventListener('input', encodeText);
-</script>
+        function decodeText() {
+            const text = varisInput.value;
+            const shift = getShift();
+            let result = '', isNum = false;
 
+            for (let char of text) {
+                if (char === '“') { isNum = true; continue; }
+                if (char === '‘') { isNum = false; continue; }
+
+                let symIdx = symbols.indexOf(char);
+                if (symIdx !== -1) {
+                    let rawIdx = symIdx - 1;
+                    if (isNum) {
+                        let idx = (rawIdx - shift) % 10;
+                        result += numberOrder[idx < 0 ? idx + 10 : idx];
+                    } else {
+                        let idx = (rawIdx - shift) % 27;
+                        result += alphabetOrder[idx < 0 ? idx + 27 : idx];
+                    }
+                } else {
+                    result += char;
+                }
+            }
+            englishInput.value = result.toLowerCase();
+        }
+
+        englishInput.addEventListener('input', encodeText);
+        varisInput.addEventListener('input', decodeText);
+        shiftInput.addEventListener('input', encodeText);
+    </script>
 </body>
 </html>
