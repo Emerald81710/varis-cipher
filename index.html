@@ -61,7 +61,7 @@
 
     <div id="code-panel" class="secret-modal">
         <div class="modal-content">
-            <h3>^⋏┬µ↻⇄v↱^┬v↻⊔·⇄¦⌍⋏v⇄¦⟫</h3>
+            <h3>-:!\:{+&,%:)</h3>
             <input type="password" id="cipher-code-input" placeholder=":%{:\+,!!:--+!^;:">
             <div class="button-group">
                 <button class="modal-btn" onclick="checkCode()">!^%~$\=</button>
@@ -72,10 +72,10 @@
     </div>
     <div id="secret-panel" class="secret-modal">
         <div class="modal-content">
-            <h3 id="glitch-header">⌌^∼∼⌗↻⇄⟫·^⟪⟪¦⌌┬¦⟫</h3>
+            <h3 id="glitch-header">-:!\:{+&,%:)</h3>
             
             <div style="background:#02050a;border:1px solid var(--border);border-radius:6px;padding:20px;margin:20px 0;text-align:left;">
-                <label style="color:#64748b;font-size:11px;display:block;margin-bottom:12px;letter-spacing:2px;font-weight:bold;">[ SECURE DIRECTORY CHANNELS ]</label>
+                <label style="color:#64748b;font-size:11px;display:block;margin-bottom:12px;letter-spacing:2px;font-weight:bold;">[ ^{#:\+!$&#:\- ]</label>
                 
                 <div style="display:flex;flex-direction:column;gap:10px;">
                     <a href="https://emerald81710.github.io/vectra-translator/" target="_blank" class="modal-btn" style="text-decoration:none;text-align:center;display:block;">[ VECTRA ]</a>
@@ -84,7 +84,7 @@
             </div>
 
             <div class="button-group">
-                <button class="modal-btn" onclick="closeSecretPanel()">CLOSE HUB</button>
+                <button class="modal-btn" onclick="closeSecretPanel()">!)^-:</button>
             </div>
         </div>
     </div>
@@ -144,7 +144,7 @@
         document.getElementById('cipher-code-input').addEventListener('keypress',(e)=>{if(e.key==='Enter')checkCode();});
 
         function runGlitchEffect(){
-            const el=document.getElementById('glitch-header'),target="⌌^∼∼⌗↻⇄⟫·^⟪⟪¦⌌┬¦⟫";let iter=0;clearInterval(el.interval);
+            const el=document.getElementById('glitch-header'),target="-:!\:{+&,%:)";let iter=0;clearInterval(el.interval);
             el.interval=setInterval(()=>{el.innerText=target.split("").map((c,i)=>{if(i<iter)return target[i];return symbols[Math.floor(Math.random()*symbols.length)];}).join("");if(iter>=target.length)clearInterval(el.interval);iter+=1/3;},40);
         }
     </script>
