@@ -5,24 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VARIS</title>
     <style>
-        :root{--bg-color:#060a12;--card-bg:#090f1a;--accent:#10b981;--accent-dim:rgba(16,185,129,0.2);--text-light:#e2e8f0;--border:#1e293b;}
+        :root{--bg-color:#060a12;--card-bg:#090f1a;--accent:#10b981;--accent-dim:rgba(16,185,129,0.2);--text-light:#e2e8f0;--border:#1e293b;--text:#94a3b8;}
         body{font-family:'Courier New',Courier,monospace;background-color:var(--bg-color);background-image:linear-gradient(rgba(18,24,38,0) 50%,rgba(0,0,0,0.25) 50%),linear-gradient(90deg,rgba(255,0,0,0.03),rgba(0,255,0,0.01),rgba(0,255,0,0.03));background-size:100% 4px,6px 100%;color:var(--text-light);margin:0;padding:40px 20px;display:flex;flex-direction:column;align-items:center;min-height:100vh;box-sizing:border-box;}
         .container{max-width:650px;width:100%;background:var(--card-bg);padding:35px;border-radius:12px;border:1px solid #1e293b;box-shadow:0 20px 40px rgba(0,0,0,0.7),inset 0 0 20px rgba(16,185,129,0.03);}
         h1{text-align:center;color:var(--accent);margin:0 0 25px;letter-spacing:4px;font-size:28px;font-weight:bold;text-shadow:0 0 10px var(--accent-dim);animation:textGlow 4s infinite alternate;cursor:pointer;user-select:none;}
-        @keyframes textGlow{0%{text-shadow:0 0 8px rgba(16,185,129,0.3);}100%{text-shadow:0 0 18px rgba(16,185,129,0.6);}}
-        .input-group{position:relative;margin-bottom:20px;}
-        label{display:block;margin:0 0 8px 4px;font-weight:bold;font-size:13px;text-transform:uppercase;letter-spacing:1.5px;color:#64748b;}
-        textarea{width:100%;height:130px;padding:15px;border-radius:6px;border:1px solid #131e31;background-color:#04070d;color:var(--text-light);font-size:16px;box-sizing:border-box;resize:vertical;font-family:inherit;transition:all 0.25s ease;box-shadow:inset 0 2px 8px rgba(0,0,0,0.8);}
-        textarea:focus{outline:none;border-color:rgba(16,185,129,0.5);box-shadow:0 0 12px rgba(16,185,129,0.15),inset 0 2px 8px rgba(0,0,0,0.8);color:#fff;}
-        textarea::placeholder{color:#334155;}
-        .control-panel{display:flex;justify-content:center;align-items:center;margin:20px 0;gap:15px;padding:12px;background:#04070d;border:1px solid #131e31;border-radius:6px;box-shadow:inset 0 2px 5px rgba(0,0,0,0.5);}
-        .shift-label{margin:0;font-size:13px;font-weight:bold;letter-spacing:1px;color:var(--accent);text-transform:uppercase;}
-        input[type="number"]{width:70px;background:#090f1a;border:1px solid #1e293b;color:#fff;padding:8px;font-family:inherit;font-size:16px;text-align:center;border-radius:4px;}
-        input[type="number"]:focus{outline:none;border-color:var(--accent);}
-        .legend{margin-top:30px;padding-top:20px;border-top:1px dashed #1e293b;font-size:11px;color:#475569;text-align:center;line-height:1.6;letter-spacing:0.5px;}
+        @keyframes textGlow { 0% { text-shadow: 0 0 8px rgba(16, 185, 129, 0.3); } 100% { text-shadow: 0 0 18px rgba(16, 185, 129, 0.6); } }
+        .input-group { position: relative; margin-bottom: 20px; }
+        label { display: block; margin: 0 0 8px 4px; font-weight: bold; font-size: 13px; text-transform: uppercase; letter-spacing: 1.5px; color: #64748b; }
+        textarea {
+            width: 100%; height: 130px; padding: 15px; border-radius: 6px; border: 1px solid #131e31;
+            background-color: #04070d; color: var(--text-light); font-size: 16px; box-sizing: border-box;
+            resize: vertical; font-family: inherit; transition: all 0.25s ease; box-shadow: inset 0 2px 8px rgba(0,0,0,0.8);
+        }
+        textarea:focus { outline: none; border-color: rgba(16, 185, 129, 0.5); box-shadow: 0 0 12px rgba(16, 185, 129, 0.15), inset 0 2px 8px rgba(0,0,0,0.8); color: #fff; }
+        textarea::placeholder { color: #334155; }
+        .control-panel {
+            display: flex; justify-content: center; align-items: center; margin: 20px 0; gap: 15px;
+            padding: 12px; background: #04070d; border: 1px solid #131e31; border-radius: 6px; box-shadow: inset 0 2px 5px rgba(0,0,0,0.5);
+        }
+        .shift-label { margin: 0; font-size: 13px; font-weight: bold; letter-spacing: 1px; color: var(--accent); text-transform: uppercase; }
+        input[type="number"] { width: 70px; background: #090f1a; border: 1px solid #1e293b; color: #fff; padding: 8px; font-family: inherit; font-size: 16px; text-align: center; border-radius: 4px; }
+        input[type="number"]:focus { outline: none; border-color: var(--accent); }
+        .legend { margin-top: 30px; padding-top: 20px; border-top: 1px dashed #1e293b; font-size: 11px; color: #475569; text-align: center; line-height: 1.6; letter-spacing: 0.5px; }
+        
         .secret-modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(4,7,13,0.85);backdrop-filter:blur(6px);z-index:10000;justify-content:center;align-items:center;box-sizing:border-box;transition:transform 0.1s ease;}
         .modal-content{background:var(--card-bg);color:var(--text-light);padding:35px;border-radius:12px;border:2px solid var(--accent);text-align:center;box-shadow:0 0 30px rgba(16,185,129,0.2);max-width:450px;width:90%;box-sizing:border-box;}
-        #secret-panel .modal-content{max-width:550px;}
+        #secret-panel .modal-content{max-width:500px;}
         .modal-content h3{margin-top:0;letter-spacing:2px;color:var(--accent);text-transform:uppercase;}
         .modal-content input{background:#04070d;border:1px solid #131e31;color:#fff;padding:12px;text-align:center;font-size:16px;margin-bottom:20px;border-radius:6px;width:100%;box-sizing:border-box;font-family:inherit;}
         .modal-content input:focus{outline:none;border-color:var(--accent);}
@@ -54,33 +62,36 @@
     <!-- CODE ACCESS SYSTEM -->
     <div id="code-panel" class="secret-modal">
         <div class="modal-content">
-            <h3>-:!\:{+&,%:)</h3>
-            <input type="password" id="cipher-code-input" placeholder=":%{:\+,!!:--+!^;:">
+            <h3>^⋏┬µ↻⇄v↱^┬v↻⊔·⇄¦⌍⋏v⇄¦⟫</h3>
+            <input type="password" id="cipher-code-input" placeholder="ENTER ACCESS CODE">
             <div class="button-group">
                 <button class="modal-btn" onclick="checkCode()">∼⋏»⊓v┬</button>
                 <button class="modal-btn" onclick="closeCodePanel()">⟪^⊔⟪¦⌊</button>
             </div>
-            <p id="error-message" class="hidden">,!!:--+;:%$:;.+$%<,)$;+!):,\,%!:</p>
+            <p id="error-message" class="hidden">ACCESS DENIED. INVALID CLEARANCE.</p>
         </div>
     </div>
-
-    <!-- MAIN CONTROL CORE SHELL -->
+    <!-- SECRET LINK HUB PANEL -->
     <div id="secret-panel" class="secret-modal">
         <div class="modal-content">
             <h3 id="glitch-header">⌌^∼∼⌗↻⇄⟫·^⟪⟪¦⌌┬¦⟫</h3>
-            <div id="term-log" style="background:#02050a;border:1px solid var(--border);border-radius:6px;padding:15px;margin:20px 0;text-align:left;height:160px;overflow-y:auto;font-size:12px;color:var(--accent);line-height:1.5;box-shadow:inset 0 3px 10px rgba(0,0,0,0.9);">
-                <div>[SYSTEM VARIS OVERRIDE OS ACTIVATED]</div>
-                <div>TYPE 'help' FOR OPERATIONS.</div>
+            
+            <div style="background:#02050a;border:1px solid var(--border);border-radius:6px;padding:20px;margin:20px 0;text-align:left;">
+                <label style="color:#64748b;font-size:11px;display:block;margin-bottom:12px;letter-spacing:2px;font-weight:bold;">[ SECURE DIRECTORY CHANNELS ]</label>
+                
+                <div style="display:flex;flex-direction:column;gap:10px;">
+                    <!-- SWAP OUT THE LINKS BELOW WITH YOUR REAL GITHUB URLS -->
+                    <a href="https://github.io" target="_blank" class="modal-btn" style="text-decoration:none;text-align:center;display:block;">[ ACCESS VECTRA TRANSLATOR ]</a>
+                    <a href="https://github.io" target="_blank" class="modal-btn" style="text-decoration:none;text-align:center;display:block;">[ ACCESS MAINFRAME 03 ]</a>
+                </div>
             </div>
-            <div style="display:flex;align-items:center;background:#02050a;border:1px solid var(--border);border-radius:6px;padding:10px;margin-bottom:20px;">
-                <span style="color:var(--accent);font-weight:bold;margin-right:10px;user-select:none;">&gt;</span>
-                <input type="text" id="term-cmd" placeholder="enter operational parameter..." style="background:none;border:none;color:#fff;width:100%;font-family:inherit;font-size:14px;outline:none;margin:0;padding:0;letter-spacing:1px;">
-            </div>
+
             <div class="button-group">
                 <button class="modal-btn" onclick="closeSecretPanel()">CLOSE HUB</button>
             </div>
         </div>
     </div>
+
     <script>
         const alphabetOrder=[...'ABCDEFGHIJKLMNOPQRSTUVWXYZ '],numberOrder=[...'1234567890'],symbols=".,?!;:~@#$*()=%^&/\\-{}<>[ ]+_";
         const englishInput=document.getElementById('englishInput'),varisInput=document.getElementById('varisInput'),shiftInput=document.getElementById('shiftInput');
@@ -112,9 +123,11 @@
 
         englishInput.addEventListener('input',encodeText);varisInput.addEventListener('input',decodeText);shiftInput.addEventListener('input',encodeText);
 
-        const SECRET_CODE="81710";let gSpeed=40;
-        function playSnd(f,d=0.3,v=0.1){try{let c=new(window.AudioContext||window.webkitAudioContext)(),o=c.createOscillator(),g=c.createGain();o.type='sine';o.frequency.value=f;g.gain.setValueAtTime(v,c.currentTime);g.gain.exponentialRampToValueAtTime(0.01,c.currentTime+d);o.connect(g);g.connect(c.destination);o.start();o.stop(c.currentTime+d);}catch(e){}}
-        function playChime(){playSnd(523);setTimeout(()=>playSnd(587),70);setTimeout(()=>playSnd(659),140);setTimeout(()=>playSnd(784),210);}
+        const SECRET_CODE="81710";
+        function playChime(){
+            try{let ctx=new(window.AudioContext||window.webkitAudioContext)(),t=0;
+            [523,659,784,1046].forEach(f=>{setTimeout(()=>{let o=ctx.createOscillator(),g=ctx.createGain();o.type='sine';o.frequency.value=f;g.gain.setValueAtTime(0.1,ctx.currentTime);g.gain.exponentialRampToValueAtTime(0.01,ctx.currentTime+0.3);o.connect(g);g.connect(ctx.destination);o.start();o.stop(ctx.currentTime+0.3);},t);t+=70;});}catch(e){}
+        }
 
         function openCodePanel(){document.getElementById('code-panel').style.display='flex';document.getElementById('cipher-code-input').focus();}
         function closeCodePanel(){document.getElementById('code-panel').style.display='none';document.getElementById('cipher-code-input').value='';document.getElementById('error-message').classList.add('hidden');}
@@ -122,40 +135,21 @@
         function checkCode(){
             const inp=document.getElementById('cipher-code-input'),err=document.getElementById('error-message'),panel=document.getElementById('code-panel');
             if(inp.value===SECRET_CODE){closeCodePanel();openSecretPanel();}
-            else{err.classList.remove('hidden');inp.value='';panel.style.transform='translateX(12px)';setTimeout(()=>panel.style.transform='translateX(-12px)',70);setTimeout(()=>panel.style.transform='translateX(6px)',140);setTimeout(()=>panel.style.transform='translateX(0)',210);playSnd(150,0.2,0.2);}
+            else{err.classList.remove('hidden');inp.value='';panel.style.transform='translateX(12px)';setTimeout(()=>panel.style.transform='translateX(-12px)',70);setTimeout(()=>panel.style.transform='translateX(6px)',140);setTimeout(()=>panel.style.transform='translateX(0)',210);}
         }
 
-        function openSecretPanel(){document.getElementById('secret-panel').style.display='flex';document.getElementById('secret-panel').style.background='radial-gradient(circle,#052214 0%,#020408 100%)';playChime();runGlitchEffect();setTimeout(()=>document.getElementById('term-cmd').focus(),50);}
+        function openSecretPanel(){
+            document.getElementById('secret-panel').style.display='flex';
+            document.getElementById('secret-panel').style.background='radial-gradient(circle,#052214 0%,#020408 100%)';
+            playChime();runGlitchEffect();
+        }
         function closeSecretPanel(){document.getElementById('secret-panel').style.display='none';}
         document.getElementById('cipher-code-input').addEventListener('keypress',(e)=>{if(e.key==='Enter')checkCode();});
 
         function runGlitchEffect(){
             const el=document.getElementById('glitch-header'),target="⌌^∼∼⌗↻⇄⟫·^⟪⟪¦⌌┬¦⟫";let iter=0;clearInterval(el.interval);
-            el.interval=setInterval(()=>{el.innerText=target.split("").map((c,i)=>{if(i<iter)return target[i];return symbols[Math.floor(Math.random()*symbols.length)];}).join("");if(iter>=target.length)clearInterval(el.interval);iter+=1/3;},gSpeed);
+            el.interval=setInterval(()=>{el.innerText=target.split("").map((c,i)=>{if(i<iter)return target[i];return symbols[Math.floor(Math.random()*symbols.length)];}).join("");if(iter>=target.length)clearInterval(el.interval);iter+=1/3;},40);
         }
-
-        document.getElementById('term-cmd').addEventListener('keypress',function(e){
-            if(e.key==='Enter'){
-                const field=e.target,raw=field.value.trim().toLowerCase();if(!raw)return;
-                const logBox=document.getElementById('term-log'),[cmd,arg]=raw.split(' ');
-                let resp=`<div><span style="color:#64748b">&gt; ${field.value}</span></div>`;
-                if(cmd==='help'){resp+=`<div>DIRECTORY:<br>- <span style="color:#fff">color [emerald/amber/crimson]</span> : Tint<br>- <span style="color:#fff">speed [slow/stable/hyper]</span> : Glitch delay<br>- <span style="color:#fff">sysinfo</span> : Matrix specs<br>- <span style="color:#fff">clear</span> : Purge screen</div>`;}
-                else if(cmd==='color'){
-                    if(arg==='emerald'){document.documentElement.style.setProperty('--accent','#10b981');document.documentElement.style.setProperty('--accent-dim','rgba(16,185,129,0.2)');resp+='<div>SET: EMERALD</div>';}
-                    else if(arg==='amber'){document.documentElement.style.setProperty('--accent','#ffb000');document.documentElement.style.setProperty('--accent-dim','rgba(255,176,0,0.2)');resp+='<div>SET: AMBER</div>';}
-                    else if(arg==='crimson'){document.documentElement.style.setProperty('--accent','#ef4444');document.documentElement.style.setProperty('--accent-dim','rgba(239,68,68,0.2)');resp+='<div>SET: CRIMSON</div>';}
-                    else{resp+='<span style="color:#ef4444">ERR: color amber</span>';}
-                }else if(cmd==='speed'){
-                    if(arg==='slow'){gSpeed=80;resp+='<div>DELAY: SLOW (80ms)</div>';}
-                    else if(arg==='stable'){gSpeed=40;resp+='<div>DELAY: STABLE (40ms)</div>';}
-                    else if(arg==='hyper'){gSpeed=15;resp+='<div>DELAY: HYPER (15ms)</div>';}
-                    else{resp+='<span style="color:#ef4444">ERR: speed hyper</span>';}
-                }else if(cmd==='sysinfo'){resp+=`<div>[VARIS DATA]<br>PORT: 81710 MATCHED<br>NODES: ${alphabetOrder.length+numberOrder.length} BASE LOGS<br>LATENCY: ${gSpeed}ms STEP</div>`;}
-                else if(cmd==='clear'){logBox.innerHTML='';field.value='';return;}
-                else{resp+=`<span style="color:#ef4444">UNKNOWN PARAMETER '${cmd}'.</span>`;}
-                logBox.innerHTML+=resp;logBox.scrollTop=logBox.scrollHeight;field.value='';playSnd(600,0.03,0.02);
-            }
-        });
     </script>
 </body>
 </html>
